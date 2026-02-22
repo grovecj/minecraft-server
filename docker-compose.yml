@@ -12,7 +12,7 @@ services:
       EULA: "TRUE"
       TYPE: PAPER
       VERSION: "LATEST"
-      MEMORY: "1536M"
+      MEMORY: "3G"
 
       # Server properties
       MOTD: "\u00a7bCarter\u00a77's \u00a7aMinecraft Server"
@@ -30,20 +30,15 @@ services:
       # Performance tuning (Aikar's flags for GC optimization)
       USE_AIKAR_FLAGS: "true"
 
-      # Plugins from Modrinth (auto-downloaded)
-      MODRINTH_PROJECTS: |
-        essentialsx
-        luckperms
-        worldedit
-        worldguard
-        coreprotect
-        bluemap
-        viaversion
-
-      MODRINTH_ALLOWED_VERSION_TYPE: release
-
-      # Geyser + Floodgate via direct download (no stable releases on Modrinth)
+      # Plugins (direct URLs to avoid Modrinth version-matching issues)
       PLUGINS: |
+        https://cdn.modrinth.com/data/hXiIvTyT/versions/Oa9ZDzZq/EssentialsX-2.21.2.jar
+        https://cdn.modrinth.com/data/Vebnzrzj/versions/OrIs0S6b/LuckPerms-Bukkit-5.5.17.jar
+        https://cdn.modrinth.com/data/1u6JkXh5/versions/CkT32vix/worldedit-bukkit-7.4.0.jar
+        https://cdn.modrinth.com/data/DKY9btbd/versions/oyjmf4DD/worldguard-bukkit-7.0.16-beta-01.jar
+        https://cdn.modrinth.com/data/Lu3KuzdV/versions/HD2IvrxS/CoreProtect-CE-23.1.jar
+        https://cdn.modrinth.com/data/swbUV1cr/versions/nTnTxZjy/bluemap-5.16-spigot.jar
+        https://cdn.modrinth.com/data/P1OZGk5p/versions/iuIj8EtY/ViaVersion-5.7.2-SNAPSHOT.jar
         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
         https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
 
