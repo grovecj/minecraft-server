@@ -1,0 +1,3 @@
+minecraft.cartergrove.me {
+	reverse_proxy minecraft:8100
+}

@@ -10,7 +10,7 @@ output "server_address" {
 
 output "bluemap_url" {
   description = "BlueMap web map URL"
-  value       = "http://${var.subdomain}.${var.domain}:8100"
+  value       = "https://${var.subdomain}.${var.domain}"
 }
 
 output "ssh_command" {

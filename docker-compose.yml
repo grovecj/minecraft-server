@@ -6,7 +6,8 @@ services:
     ports:
       - "25565:25565"      # Java Edition
       - "19132:19132/udp"  # Bedrock Edition (GeyserMC)
-      - "8100:8100"        # BlueMap web map
+    expose:
+      - "8100"             # BlueMap (internal, proxied by Caddy)
     environment:
       EULA: "TRUE"
       TYPE: PAPER
@@ -50,3 +51,21 @@ services:
       - ./data:/data
     stdin_open: true
     tty: true
+
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - minecraft
+
+volumes:
+  caddy_data:
+  caddy_config:

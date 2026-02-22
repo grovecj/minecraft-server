@@ -32,8 +32,9 @@ resource "digitalocean_droplet" "minecraft" {
   })
 
   lifecycle {
-    # Prevent accidental destruction of the server
     prevent_destroy = true
+    # Cloud-init only runs on first boot; don't rebuild for config changes
+    ignore_changes = [user_data]
   }
 }
 
@@ -63,10 +64,17 @@ resource "digitalocean_firewall" "minecraft" {
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
-  # BlueMap web map
+  # HTTP (redirect to HTTPS)
   inbound_rule {
     protocol         = "tcp"
-    port_range       = "8100"
+    port_range       = "80"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  # HTTPS (BlueMap via Caddy)
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "443"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
