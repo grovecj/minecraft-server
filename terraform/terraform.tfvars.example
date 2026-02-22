@@ -1,0 +1,7 @@
+# Copy this to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to git (it contains secrets)
+
+do_token     = "your-digitalocean-api-token"
+region       = "nyc1"
+size         = "s-1vcpu-2gb"
+ssh_key_name = "1PASSWORD-DigitalOcean"

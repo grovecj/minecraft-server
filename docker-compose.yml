@@ -1,0 +1,52 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: minecraft
+    restart: unless-stopped
+    ports:
+      - "25565:25565"      # Java Edition
+      - "19132:19132/udp"  # Bedrock Edition (GeyserMC)
+      - "8100:8100"        # BlueMap web map
+    environment:
+      EULA: "TRUE"
+      TYPE: PAPER
+      VERSION: "LATEST"
+      MEMORY: "1536M"
+
+      # Server properties
+      MOTD: "\u00a7bCarter\u00a77's \u00a7aMinecraft Server"
+      MAX_PLAYERS: 20
+      VIEW_DISTANCE: 10
+      SIMULATION_DISTANCE: 8
+      DIFFICULTY: normal
+      MODE: survival
+      PVP: "true"
+      SPAWN_PROTECTION: 0
+      ENABLE_COMMAND_BLOCK: "true"
+      ALLOW_NETHER: "true"
+      ONLINE_MODE: "true"
+
+      # Performance tuning (Aikar's flags for GC optimization)
+      USE_AIKAR_FLAGS: "true"
+
+      # Plugins from Modrinth (auto-downloaded)
+      MODRINTH_PROJECTS: |
+        essentialsx
+        luckperms
+        worldedit
+        worldguard
+        coreprotect
+        bluemap
+        viaversion
+
+      MODRINTH_ALLOWED_VERSION_TYPE: release
+
+      # Geyser + Floodgate via direct download (no stable releases on Modrinth)
+      PLUGINS: |
+        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+
+    volumes:
+      - ./data:/data
+    stdin_open: true
+    tty: true
