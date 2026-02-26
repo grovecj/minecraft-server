@@ -6,6 +6,7 @@ on:
     paths:
       - docker-compose.yml
       - Caddyfile
+  workflow_dispatch:
 
 jobs:
   deploy:
