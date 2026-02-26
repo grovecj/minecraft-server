@@ -41,6 +41,7 @@ services:
         https://cdn.modrinth.com/data/P1OZGk5p/versions/iuIj8EtY/ViaVersion-5.7.2-SNAPSHOT.jar
         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
         https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+        https://cdn.modrinth.com/data/fALzjamp/versions/P3y2MXnd/Chunky-Bukkit-1.4.40.jar
 
     volumes:
       - ./data:/data
