@@ -1,6 +1,6 @@
 # Minecraft Server
 
-Paper Minecraft server running on Digital Ocean, managed with Terraform and Docker.
+Paper Minecraft server running on Digital Ocean with Docker. The machine itself (Droplet, firewall, DNS record) is Terraform in [grovecj/cartergrove-me-infra](https://github.com/grovecj/cartergrove-me-infra/tree/main/projects/minecraft); this repo holds what runs on it.
 
 - **Server**: `minecraft.cartergrove.me`
 - **Bedrock**: `minecraft.cartergrove.me` port `19132`
@@ -19,19 +19,22 @@ Paper Minecraft server running on Digital Ocean, managed with Terraform and Dock
 
 ### First-time setup
 
-```bash
-cd terraform
-cp terraform.tfvars.example terraform.tfvars
-# Edit terraform.tfvars with your DO API token
-terraform init
-terraform apply
-```
+The Droplet is created from `projects/minecraft/` in
+[grovecj/cartergrove-me-infra](https://github.com/grovecj/cartergrove-me-infra#minecraft-projectsminecraft).
+On its first boot it clones this repo to `/opt/minecraft` and runs
+`docker compose up -d`, so `docker-compose.yml` and the `Caddyfile` must stay
+at the repo root, and the repo must stay public.
 
 ### Updating config
 
+Pushing a change to `docker-compose.yml` or the `Caddyfile` on `main` runs the
+Deploy workflow, which copies both files to the Droplet and restarts what
+changed. It needs two Actions secrets: `SERVER_HOST` (`minecraft.cartergrove.me`)
+and `SSH_PRIVATE_KEY`. By hand:
+
 ```bash
-scp docker-compose.yml Caddyfile root@<DROPLET_IP>:/opt/minecraft/
-ssh root@<DROPLET_IP> 'cd /opt/minecraft && docker compose down && docker compose up -d'
+scp docker-compose.yml Caddyfile root@minecraft.cartergrove.me:/opt/minecraft/
+ssh root@minecraft.cartergrove.me 'cd /opt/minecraft && docker compose down && docker compose up -d'
 ```
 
 ### Useful commands (on the droplet)
@@ -47,9 +50,10 @@ docker compose pull && docker compose up -d  # Update container image
 
 ### Resizing
 
-1. `docker compose down` on the droplet
-2. DO Dashboard > Droplets > Resize > pick new size
-3. `docker compose up -d`
+Change `size` in cartergrove-me-infra's `projects/minecraft/variables.tf` and
+apply it there. The Droplet powers off for the resize and comes back with the
+server running (`restart: unless-stopped`). Raise `MEMORY` in
+`docker-compose.yml` to match, about 1 GB below the Droplet's RAM.
 
 ## Plugins
 
